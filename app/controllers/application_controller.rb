@@ -32,5 +32,19 @@ class ApplicationController < ActionController::Base
     render ({:template => "calculation_templates/random_results.html.erb"})
   end
 
+  def payment_form
+    render ({:template => "calculation_templates/payment_form.html.erb"})
+  end
+
+  def calculate_payment
+    @apr = params.fetch("bluemonk").to_f
+    @years = params.fetch("redmonk").to_i
+    @principal = params.fetch("greenmonk").to_f
+    @numerator = @principal * (@apr / 1200)
+    @denominator = 1 - ((1 + (@apr / 1200)) ** (-12 * @years))
+    render ({:template => "calculation_templates/payment_results.html.erb"})
+  end 
+
+
 
 end
